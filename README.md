@@ -31,12 +31,12 @@
 [
   {
     "username": "karmen_teacher",
-    "password": "123",
+    "password": "1234",
     "role": "teacher"
   },
   {
     "username": "malak_student",
-    "password": "123",
+    "password": "1234",
     "role": "student"
   }
 ]
@@ -51,15 +51,15 @@
   {
     "id": "c1a4ddce-27a2-45a9-9f8d-273c153f8640",
     "searchCode": "4829",
-    "title": "מבחן ב-JavaScript",
+    "title": "מבחן ב-math",
     "description": "מבחן מסכם",
     "category": "מדעי המחשב",
     "durationMinutes": 30,
     "questions": [
       {
-        "text": "מה זה LocalStorage?",
-        "answers": ["שרת", "אחסון בדפדפן", "שפה", "ספרייה"],
-        "correctAnswerIndex": 1
+        "text": "36*5?",
+        "answers": ["90", "300", "150", "180"],
+        "correctAnswerIndex": 4
       }
     ],
     "createdAt": "2026-07-11T10:00:00.000Z"
@@ -74,7 +74,7 @@
 [
   {
     "studentUsername": "malak_student",
-    "examTitle": "מבחן ב-JavaScript",
+    "examTitle": "מבחן ב-math",
     "score": 100
   }
 ]
