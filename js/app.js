@@ -7,6 +7,18 @@ import { TeacherUI } from "./ui/TeacherUI.js";
 import { StudentUI } from "./ui/StudentUI.js";
 import { ResultService } from "./services/ResultService.js";
 
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (!localStorage.getItem('users')) {
+        const defaultUsers = [
+            { "username": "karmen_teacher", "password": "123", "role": "teacher" },
+            { "username": "malak_student", "password": "123", "role": "student" }
+        ];
+        localStorage.setItem('users', JSON.stringify(defaultUsers));
+    }
+    
+});
+
 // ==========================================
 // --- הגדרות ושירותים ---
 // ==========================================
