@@ -16,7 +16,7 @@
 <p align="center">
   <a href="https://karmenmtanes.github.io/QuizSystemProject/"><strong>פתיחת האתר</strong></a>
   &nbsp;•&nbsp;
-  <a href="https://github.com/karmenmtanes/QuizSystemProject"><strong>קוד המקור ב־GitHub</strong></a>
+  <a href="https://karmenmtanes.github.io/QuizSystemProject/"><strong>קוד המקור ב־GitHub</strong></a>
 </p>
 
 ---
