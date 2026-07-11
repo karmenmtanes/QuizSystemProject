@@ -32,21 +32,22 @@ body {
   font-size: 0.9rem;
   color: #666;
 }
-/* إضافات مقترحة لحل مشاكل النقر وتنسيق إضافي */
 
-/* 1. ضمان أن الأزرار تكون فوق أي عنصر آخر */
+/* Suggested additions to fix click issues and improve styling */
+
+/* 1. Ensure buttons stay above other elements */
 button {
   position: relative;
   z-index: 10;
   cursor: pointer;
 }
 
-/* 2. تحسين تفاعل المستخدم عند تمرير الماوس */
+/* 2. Improve user interaction on hover */
 button:hover {
   filter: brightness(90%);
 }
 
-/* 3. التأكد من أن الـ labels (خيارات الأسئلة) تستجيب للنقر بشكل كامل */
+/* 3. Ensure labels (question options) are fully clickable */
 .question-box label {
   display: block;
   padding: 8px;
@@ -58,13 +59,13 @@ button:hover {
   background-color: #f0f0f0;
 }
 
-/* 4. معالجة أي تداخل محتمل قد يغطي الزر */
+/* 4. Prevent any potential overlap covering the button */
 #submitExamBtn {
   margin-top: 20px;
-  width: 100%; /* اجعلي الزر بعرض كامل ليكون أسهل في الضغط */
+  width: 100%; /* Make the button full width for easier clicking */
 }
 
-/* 5. تنسيق إضافي للمسافات لضمان عدم تداخل النصوص */
+/* 5. Add extra spacing to prevent text overlap */
 #examExecutionArea {
   padding-bottom: 50px;
 }

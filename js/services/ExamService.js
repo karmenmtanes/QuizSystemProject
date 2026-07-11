@@ -1,44 +1,52 @@
+// services/ExamService.js
+
 import { Exam } from "../models/Exam.js";
 import { Question } from "../models/Question.js";
 
+// Handles exam storage and retrieval
 export class ExamService {
+  // Initializes the storage key
   constructor() {
     this.storageKey = "exams";
   }
 
-  // פונקציה להבאת כל המבחנים מה-LocalStorage
+  // Retrieves all exams from LocalStorage
   getAllExams() {
     const data = localStorage.getItem(this.storageKey);
 
+    // Return an empty array if no exams are stored
     if (!data) {
       return [];
     }
 
     const plainExams = JSON.parse(data);
 
-    // יצירה מחדש של אובייקטי Exam עם כל המאפיינים שלהם כולל ה-searchCode
+    // Rebuild Exam objects with all their properties
     return plainExams.map(examData => {
-      // יצירת מופע חדש של Exam עם הנתונים המלאים
+      // Create a new Exam instance
       const exam = new Exam(
-        examData.title, 
-        examData.description, 
-        examData.category, 
+        examData.title,
+        examData.description,
+        examData.category,
         examData.durationMinutes
       );
 
-      // שחזור מאפייני המבחן המקוריים
+      // Restore the original exam properties
       exam.id = examData.id;
-      exam.searchCode = examData.searchCode; // חשוב: שחזור הקוד לחיפוש
+      exam.searchCode = examData.searchCode;
       exam.createdAt = examData.createdAt;
 
-      // שחזור מערך השאלות
+      // Rebuild the questions array
       exam.questions = examData.questions.map(questionData => {
         const question = new Question(
           questionData.text,
           questionData.answers,
           questionData.correctAnswerIndex
         );
+
+        // Restore the original question ID
         question.id = questionData.id;
+
         return question;
       });
 
@@ -46,44 +54,47 @@ export class ExamService {
     });
   }
 
-  // שדרוג הפונקציה כך שתטפל גם בעדכון וגם בהוספה
+  // Saves a new exam or updates an existing one
   saveExam(exam) {
     const exams = this.getAllExams();
     const index = exams.findIndex(ex => ex.id === exam.id);
-    
+
     if (index !== -1) {
-      // אם המבחן קיים, נעדכן אותו
+      // Update the existing exam
       exams[index] = exam;
     } else {
-      // אם הוא חדש, נוסיף אותו
+      // Add the new exam
       exams.push(exam);
     }
+
     localStorage.setItem(this.storageKey, JSON.stringify(exams));
   }
 
-  // פונקציה למחיקת מבחן לפי ID
+  // Deletes an exam by its ID
   deleteExam(examId) {
     const exams = this.getAllExams();
     const filteredExams = exams.filter(exam => exam.id !== examId);
+
     localStorage.setItem(this.storageKey, JSON.stringify(filteredExams));
   }
 
-  // פונקציה לחיפוש מבחן לפי הקוד שלו (searchCode)
+  // Finds an exam using its search code
   getExamByCode(code) {
     const exams = this.getAllExams();
     return exams.find(exam => exam.searchCode === code);
   }
 
-  // פונקציה למציאת מבחן לפי ID
+  // Finds an exam by its unique ID
   getExamById(examId) {
     const exams = this.getAllExams();
     return exams.find(exam => exam.id === examId);
   }
 
-  // פונקציה לעדכון מבחן קיים
+  // Updates an existing exam
   updateExam(updatedExam) {
     const exams = this.getAllExams();
     const index = exams.findIndex(exam => exam.id === updatedExam.id);
+
     if (index !== -1) {
       exams[index] = updatedExam;
       localStorage.setItem(this.storageKey, JSON.stringify(exams));

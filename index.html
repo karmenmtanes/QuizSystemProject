@@ -23,7 +23,7 @@
             <p class="mb-0"><strong>Karmen Mtanes</strong></p>
             <p class="small">תעודת זהות : 213349343</p>
         </div>
-        <div class="vr"></div> <!-- קו הפרדה קטן -->
+        <div class="vr"></div> <!-- Small separator line -->
         <div>
             <p class="mb-0"><strong>Malak Batheesh</strong></p>
             <p class="small">תעודת זהות : 214659302</p>
@@ -33,7 +33,8 @@
         הפרופיל שלנו ב-GitHub
     </a>
 </header>
-    <!-- תפריט עליון (מוסתר כברירת מחדל) -->
+
+    <!-- Top navigation menu (hidden by default) -->
     <nav id="main-nav" class="d-none mb-4 d-flex justify-content-between align-items-center bg-light p-3 rounded">
       <span id="welcomeMessage" class="fw-bold fs-5"></span>
       <div>
@@ -41,7 +42,8 @@
         <button id="logoutBtn" class="btn btn-outline-danger">התנתק</button>
       </div>
     </nav>
-    <!-- אזור התחברות -->
+
+    <!-- Login area -->
     <div id="login-view" class="card mx-auto" style="max-width: 400px;">
       <div class="card-body">
         <h3 class="card-title text-center mb-4">התחברות</h3>
@@ -54,7 +56,7 @@
       </div>
     </div>
 
-    <!-- אזור הרשמה -->
+    <!-- Registration area -->
     <div id="register-view" class="card mx-auto d-none" style="max-width: 400px;">
       <div class="card-body">
         <h3 class="card-title text-center mb-4">הרשמה חדשה</h3>
@@ -71,7 +73,7 @@
       </div>
     </div>
 
-  <!-- תצוגת מורה -->
+  <!-- Teacher view -->
     <div id="teacher-view" class="d-none">
 
       <div class="row">
@@ -186,14 +188,14 @@
 
       </div>
 
-    </div> <!-- סיום תצוגת מורה -->
+    </div> <!-- End of teacher view -->
 
 
-    <!-- דף סטודנט -->
+    <!-- Student page -->
 <div id="student-view" class="d-none">
     <h2>אזור סטודנט</h2>
 
-    <!-- אזור טיימר ופרטי מבחן פעיל (מופיע רק בזמן מבחן) -->
+    <!-- Active exam timer and details area (shown only during an exam) -->
     <div id="active-exam-panel" class="card mb-4 border-danger d-none">
         <div class="card-header bg-danger text-white d-flex justify-content-between">
             <span>מבחן פעיל: <span id="active-exam-id"></span></span>
@@ -201,13 +203,13 @@
         </div>
     </div>
 
-    <!-- אזור היסטוריית ציונים -->
+    <!-- Grades history area -->
     <div class="card mb-4">
         <div class="card-header bg-info text-white">היסטוריית הציונים שלי</div>
         <div class="card-body" id="historyArea"></div>
     </div>
 
-    <!-- אזור חיפוש מבחן -->
+    <!-- Exam search area -->
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="card-title">חיפוש מבחן</h5>

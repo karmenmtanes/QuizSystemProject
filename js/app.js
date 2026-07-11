@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// --- הגדרות ושירותים ---
+// --- Settings and Services ---
 // ==========================================
 const authService = new AuthService();
 const examService = new ExamService();
-const resultService = new ResultService(); // שירות התוצאות
+const resultService = new ResultService(); // Results service
 const examUI = new ExamUI(examService);
 
 let teacherUI = null;
@@ -32,7 +32,7 @@ let studentUI = null;
 let currentExam = null;
 
 // ==========================================
-// --- אלמנטים לניווט והתחברות ---
+// --- Navigation and Login Elements ---
 // ==========================================
 const loginView = document.getElementById("login-view");
 const registerView = document.getElementById("register-view");
@@ -41,7 +41,7 @@ const studentView = document.getElementById("student-view");
 const mainNav = document.getElementById("main-nav");
 const welcomeMessage = document.getElementById("welcomeMessage");
 
-// פונקציית העדכון לניווט בין המסכים
+// Function to update navigation between screens
 function updateView() {
   const currentUser = authService.getCurrentUser();
   
@@ -61,19 +61,21 @@ function updateView() {
       teacherView.classList.remove("d-none");
       
       if (!teacherUI) {
-        // העברת השירותים בצורה נכונה
+        // Initialize teacher interface with required services
         teacherUI = new TeacherUI(examService, resultService); 
       }
       
       if(teacherUI && typeof teacherUI.renderExamList === 'function') {
           teacherUI.renderExamList();
       }
+
       if(teacherUI && typeof teacherUI.renderStudentResults === 'function') {
           teacherUI.renderStudentResults();
       }
 
     } else if (currentUser.role === "student") {
       studentView.classList.remove("d-none");
+
       if (!studentUI) {
         studentUI = new StudentUI(examService, resultService, currentUser);
       }
@@ -82,9 +84,9 @@ function updateView() {
 }
 
 // ==========================================
-// --- מאזיני אירועים - הרשמה והתחברות ---
+// --- Event Listeners - Registration and Login ---
 // ==========================================
-// (باقي الكود الأصلي يبقى كما هو تماماً دون تغيير)
+
 document.getElementById("goToRegisterBtn").addEventListener("click", () => {
   loginView.classList.add("d-none");
   registerView.classList.remove("d-none");
@@ -137,6 +139,7 @@ if (document.getElementById("darkModeBtn")) {
     document.body.classList.toggle("text-white");
     
     const cards = document.querySelectorAll(".card");
+
     cards.forEach(card => {
       card.classList.toggle("bg-dark");
       card.classList.toggle("border-light");
@@ -145,7 +148,7 @@ if (document.getElementById("darkModeBtn")) {
 }
 
 // ==========================================
-// --- הקוד המקורי שלך למורה (ללא שינוי) ---
+// --- Original Teacher Code ---
 // ==========================================
 const examTitleInput = document.getElementById("examTitle");
 const questionTextInput = document.getElementById("questionText");
@@ -162,8 +165,10 @@ const saveExamBtn = document.getElementById("saveExamBtn");
 
 const examListElement = document.getElementById("examList");
 
+
 if (addQuestionBtn) {
   addQuestionBtn.addEventListener("click", () => {
+
     const title = examTitleInput.value.trim();
     const questionText = questionTextInput.value.trim();
 
@@ -176,31 +181,38 @@ if (addQuestionBtn) {
 
     const correctAnswerNumber = Number(correctAnswerInput.value);
 
+
     if (!title) {
       examUI.showBuilderMessage("Please enter exam title.", "danger");
       return;
     }
+
 
     if (!questionText) {
       examUI.showBuilderMessage("Please enter question text.", "danger");
       return;
     }
 
+
     if (answers.some(answer => answer === "")) {
       examUI.showBuilderMessage("Please fill all 4 answers.", "danger");
       return;
     }
+
 
     if (correctAnswerNumber < 1 || correctAnswerNumber > 4) {
       examUI.showBuilderMessage("Correct answer must be a number from 1 to 4.", "danger");
       return;
     }
 
+
     if (!currentExam) {
       currentExam = new Exam(title);
     }
 
+
     const correctAnswerIndex = correctAnswerNumber - 1;
+
 
     const question = new Question(
       questionText,
@@ -208,99 +220,206 @@ if (addQuestionBtn) {
       correctAnswerIndex
     );
 
+
     currentExam.addQuestion(question);
+
 
     examUI.showBuilderMessage(
       `Question added. Current exam has ${currentExam.getQuestionCount()} question(s).`,
       "success"
     );
 
+
     clearQuestionInputs();
+
   });
 }
 
+
+
 if (saveExamBtn) {
+
   saveExamBtn.addEventListener("click", () => {
+
+
     if (!currentExam) {
       examUI.showBuilderMessage("Create an exam and add at least one question first.", "danger");
       return;
     }
+
 
     if (currentExam.getQuestionCount() === 0) {
       examUI.showBuilderMessage("Cannot save exam without questions.", "danger");
       return;
     }
 
+
     examService.saveExam(currentExam);
-    examUI.showBuilderMessage("Exam saved successfully.", "success");
+
+
+    examUI.showBuilderMessage(
+      "Exam saved successfully.",
+      "success"
+    );
+
+
     currentExam = null;
+
+
     examTitleInput.value = "";
+
+
     examUI.renderExamList();
+
+
   });
+
 }
+
+
 
 if (examListElement) {
+
   examListElement.addEventListener("click", event => {
+
+
     const examId = event.target.dataset.id;
 
+
+
     if (event.target.classList.contains("run-btn")) {
+
+
       const exam = examService.getExamById(examId);
+
+
       examUI.renderExamRunner(exam);
+
     }
+
+
 
     if (event.target.classList.contains("delete-btn")) {
-      const confirmed = confirm("Are you sure you want to delete this exam?");
+
+
+      const confirmed = confirm(
+        "Are you sure you want to delete this exam?"
+      );
+
+
       if (!confirmed) return;
 
+
+
       examService.deleteExam(examId);
+
+
       examUI.renderExamList();
+
     }
+
+
   });
+
 }
+
+
 
 function clearQuestionInputs() {
+
   if (questionTextInput) questionTextInput.value = "";
+
   if (answer1Input) answer1Input.value = "";
+
   if (answer2Input) answer2Input.value = "";
+
   if (answer3Input) answer3Input.value = "";
+
   if (answer4Input) answer4Input.value = "";
+
   if (correctAnswerInput) correctAnswerInput.value = "";
+
 }
 
+
+
 // ==========================================
-// --- ציוני סטודנטים ---
+// --- Student Results ---
 // ==========================================
+
+
 function showStudentResults() {
+
   const data = localStorage.getItem("exam_results");
+
+
   const results = data ? JSON.parse(data) : [];
-  
+
+
+
   const resultsDiv = document.getElementById("allStudentsResults");
-  
+
+
+
   if (!resultsDiv) return;
 
+
+
   if (results.length === 0) {
+
+
     resultsDiv.innerHTML = "<p>אין עדיין תוצאות במערכת.</p>";
+
+
     return;
+
   }
 
+
+
   let html = '<ul class="list-group">';
+
+
+
   results.forEach(r => {
+
+
     html += `<li class="list-group-item">
+
       סטודנט: <strong>${r.studentUsername}</strong> | מבחן: ${r.examTitle} | ציון: ${r.percent}%
+
     </li>`;
+
+
   });
+
+
+
   html += '</ul>';
-  
+
+
+
   resultsDiv.innerHTML = html;
+
+
 }
+
+
 
 const viewResultsBtn = document.getElementById("viewResultsBtn");
-if (viewResultsBtn) {
-  viewResultsBtn.addEventListener("click", showStudentResults);
-}
 
-// הפעלת פונקציית העדכון בעת טעינת הדף
+
+if (viewResultsBtn) {
+
+
+  viewResultsBtn.addEventListener("click", showStudentResults);
+
+
+}
+ 
+// Run the update function when the page is loaded
 if (examUI && typeof examUI.renderExamList === 'function') {
     examUI.renderExamList();
 }
+
 updateView();
