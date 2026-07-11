@@ -31,7 +31,7 @@
 [
   {
     "username": "karmen_teacher",
-    "password": "1234",
+    "password": "123",
     "role": "teacher"
   },
   {
@@ -49,8 +49,8 @@
 ```json
 [
   {
-    "id": "c1a4ddce-27a2-45a9-9f8d-273c153f8640",
-    "searchCode": "4829",
+    "id": "b6f1690f-4ea1-445b-821d-91d704c7952b",
+    "searchCode": "4904",
     "title": "מבחן ב-math",
     "description": "מבחן מסכם",
     "category": "מדעי המחשב",
