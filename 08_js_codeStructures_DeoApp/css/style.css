@@ -1,0 +1,70 @@
+body {
+  background-color: #f5f5f5;
+}
+
+.card {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.question-box {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #fff;
+}
+
+.answer-label {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.exam-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 12px;
+  background-color: #fff;
+}
+
+.small-muted {
+  font-size: 0.9rem;
+  color: #666;
+}
+/* إضافات مقترحة لحل مشاكل النقر وتنسيق إضافي */
+
+/* 1. ضمان أن الأزرار تكون فوق أي عنصر آخر */
+button {
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+}
+
+/* 2. تحسين تفاعل المستخدم عند تمرير الماوس */
+button:hover {
+  filter: brightness(90%);
+}
+
+/* 3. التأكد من أن الـ labels (خيارات الأسئلة) تستجيب للنقر بشكل كامل */
+.question-box label {
+  display: block;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.question-box label:hover {
+  background-color: #f0f0f0;
+}
+
+/* 4. معالجة أي تداخل محتمل قد يغطي الزر */
+#submitExamBtn {
+  margin-top: 20px;
+  width: 100%; /* اجعلي الزر بعرض كامل ليكون أسهل في الضغط */
+}
+
+/* 5. تنسيق إضافي للمسافات لضمان عدم تداخل النصوص */
+#examExecutionArea {
+  padding-bottom: 50px;
+}
