@@ -5,6 +5,7 @@ export class AuthService {
     this.usersKey = "users";
     this.currentUserKey = "currentUser";
   }
+  
 
   getUsers() {
     const data = localStorage.getItem(this.usersKey);
@@ -45,5 +46,15 @@ export class AuthService {
   getCurrentUser() {
     const data = sessionStorage.getItem(this.currentUserKey);
     return data ? JSON.parse(data) : null;
-  }
+  }  
 }
+export const initUsers = () => {
+    const defaultUsers = [
+        { "username": "karmen_teacher", "password": "1234", "role": "teacher" },
+        { "username": "malak_student", "password": "1234", "role": "student" }
+    ];
+
+    if (!localStorage.getItem('users')) {
+        localStorage.setItem('users', JSON.stringify(defaultUsers));
+    }
+};
