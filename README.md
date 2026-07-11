@@ -4,7 +4,7 @@
 ### 1. פרטי הפרויקט וקישורים
 
 * **שם הפרויקט:** QuizSystemProject (מערכת לבנייה וביצוע מבחנים).
-* **מפתחות:** כרמן (ת"ז: [הכניסי כאן]) ומלאך (ת"ז: [הכניסי כאן]).
+* **מפתחות:**כרמן מטאנס 213349343 ומלק בטחיש 214659302..
 * **טכנולוגיות:** HTML, CSS, JavaScript (ES6 Modules), OOP, JSON, localStorage.
 * **קוד מקור ב-GitHub:** https://github.com/karmenmtanes/QuizSystemProject
 * **אתר הפרויקט (Deploy):** https://karmenmtanes.github.io/QuizSystemProject/
