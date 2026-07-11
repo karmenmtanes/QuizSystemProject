@@ -1,228 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Exam Builder App</title>
 
   <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
   <header class="text-center mb-5">
     <h1 class="fw-bold">Karmen & Malak</h1>
     <p class="text-muted">פרויקט גמר - סדנת תכנות בסביבת האינטרנט</p>
     <div class="d-flex justify-content-center gap-3 mt-3">
-        <div>
-            <p class="mb-0"><strong>Karmen Mtanes</strong></p>
-            <p class="small">תעודת זהות : 213349343</p>
-        </div>
-        <div class="vr"></div> <!-- Small separator line -->
-        <div>
-            <p class="mb-0"><strong>Malak Batheesh</strong></p>
-            <p class="small">תעודת זהות : 214659302</p>
-        </div>
+      <div>
+        <p class="mb-0"><strong>Karmen Mtanes</strong></p>
+        <p class="small">תעודת זהות : 213349343</p>
+      </div>
+      <div class="vr"></div> <!-- Small separator line -->
+      <div>
+        <p class="mb-0"><strong>Malak Batheesh</strong></p>
+        <p class="small">תעודת זהות : 214659302</p>
+      </div>
     </div>
     <a href="https://github.com/" target="_blank" class="btn btn-dark mt-3">
-        הפרופיל שלנו ב-GitHub
+      הפרופיל שלנו ב-GitHub
     </a>
-</header>
+  </header>
 
-    <!-- Top navigation menu (hidden by default) -->
-    <nav id="main-nav" class="d-none mb-4 d-flex justify-content-between align-items-center bg-light p-3 rounded">
-      <span id="welcomeMessage" class="fw-bold fs-5"></span>
-      <div>
-        <button id="darkModeBtn" class="btn btn-outline-dark me-2">מצב כהה / בהיר</button>
-        <button id="logoutBtn" class="btn btn-outline-danger">התנתק</button>
-      </div>
-    </nav>
+  <!-- Top navigation menu (hidden by default) -->
+  <nav id="main-nav" class="d-none mb-4 d-flex justify-content-between align-items-center bg-light p-3 rounded">
+    <span id="welcomeMessage" class="fw-bold fs-5"></span>
+    <div>
+      <button id="darkModeBtn" class="btn btn-outline-dark me-2">מצב כהה / בהיר</button>
+      <button id="logoutBtn" class="btn btn-outline-danger">התנתק</button>
+    </div>
+  </nav>
 
-    <!-- Login area -->
-    <div id="login-view" class="card mx-auto" style="max-width: 400px;">
-      <div class="card-body">
-        <h3 class="card-title text-center mb-4">התחברות</h3>
-        <input type="text" id="loginUsername" class="form-control mb-3" placeholder="שם משתמש">
-        <input type="password" id="loginPassword" class="form-control mb-3" placeholder="סיסמה">
-        <button id="loginBtn" class="btn btn-primary w-100 mb-2">התחבר</button>
-        <div class="text-center">
-          <button id="goToRegisterBtn" class="btn btn-link text-decoration-none">אין לך חשבון? הירשם כאן</button>
-        </div>
+  <!-- Login area -->
+  <div id="login-view" class="card mx-auto" style="max-width: 400px;">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">התחברות</h3>
+      <input type="text" id="loginUsername" class="form-control mb-3" placeholder="שם משתמש">
+      <input type="password" id="loginPassword" class="form-control mb-3" placeholder="סיסמה">
+      <button id="loginBtn" class="btn btn-primary w-100 mb-2">התחבר</button>
+      <div class="text-center">
+        <button id="goToRegisterBtn" class="btn btn-link text-decoration-none">אין לך חשבון? הירשם כאן</button>
       </div>
     </div>
+  </div>
 
-    <!-- Registration area -->
-    <div id="register-view" class="card mx-auto d-none" style="max-width: 400px;">
-      <div class="card-body">
-        <h3 class="card-title text-center mb-4">הרשמה חדשה</h3>
-        <input type="text" id="regUsername" class="form-control mb-3" placeholder="שם משתמש">
-        <input type="password" id="regPassword" class="form-control mb-3" placeholder="סיסמה">
-        <select id="regRole" class="form-select mb-3">
-          <option value="student">סטודנט</option>
-          <option value="teacher">מרצה</option>
-        </select>
-        <button id="registerBtn" class="btn btn-success w-100 mb-2">הירשם</button>
-        <div class="text-center">
-          <button id="goToLoginBtn" class="btn btn-link text-decoration-none">חזור למסך התחברות</button>
-        </div>
+  <!-- Registration area -->
+  <div id="register-view" class="card mx-auto d-none" style="max-width: 400px;">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">הרשמה חדשה</h3>
+      <input type="text" id="regUsername" class="form-control mb-3" placeholder="שם משתמש">
+      <input type="password" id="regPassword" class="form-control mb-3" placeholder="סיסמה">
+      <select id="regRole" class="form-select mb-3">
+        <option value="student">סטודנט</option>
+        <option value="teacher">מרצה</option>
+      </select>
+      <button id="registerBtn" class="btn btn-success w-100 mb-2">הירשם</button>
+      <div class="text-center">
+        <button id="goToLoginBtn" class="btn btn-link text-decoration-none">חזור למסך התחברות</button>
       </div>
     </div>
+  </div>
 
   <!-- Teacher view -->
-    <div id="teacher-view" class="d-none">
+  <div id="teacher-view" class="d-none">
 
-      <div class="row">
+    <div class="row">
 
-        <!-- LEFT SIDE: CREATE EXAM -->
-        <div class="col-md-5">
+      <!-- LEFT SIDE: CREATE EXAM -->
+      <div class="col-md-5">
 
-          <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-              Create Exam
-            </div>
-
-            <div class="card-body">
-
-              <div class="mb-3">
-                <label class="form-label">Exam Title</label>
-                <input
-                  id="examTitle"
-                  type="text"
-                  class="form-control"
-                  placeholder="Example: JavaScript Basics"
-                >
-              </div>
-
-              <hr>
-
-              <h5>Add Question</h5>
-
-              <div class="mb-3">
-                <label class="form-label">Question Text</label>
-                <input
-                  id="questionText"
-                  type="text"
-                  class="form-control"
-                  placeholder="Example: What is const?"
-                >
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Answer 1</label>
-                <input id="answer1" type="text" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Answer 2</label>
-                <input id="answer2" type="text" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Answer 3</label>
-                <input id="answer3" type="text" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Answer 4</label>
-                <input id="answer4" type="text" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Correct Answer Number</label>
-                <input
-                  id="correctAnswer"
-                  type="number"
-                  class="form-control"
-                  min="1"
-                  max="4"
-                  placeholder="1-4"
-                >
-              </div>
-
-              <button id="addQuestionBtn" class="btn btn-success w-100 mb-2">
-                Add Question
-              </button>
-
-              <button id="saveExamBtn" class="btn btn-primary w-100">
-                Save Exam
-              </button>
-
-              <div id="builderMessage" class="mt-3"></div>
-
-            </div>
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            Create Exam
           </div>
 
-        </div>
+          <div class="card-body">
 
-        <!-- RIGHT SIDE: SAVED EXAMS -->
-        <div class="col-md-7">
-
-          <div class="card mb-4">
-            <div class="card-header bg-dark text-white">
-              Saved Exams
+            <div class="mb-3">
+              <label class="form-label">Exam Title</label>
+              <input id="examTitle" type="text" class="form-control" placeholder="Example: JavaScript Basics">
             </div>
 
-            <div class="card-body">
-              <div id="examList"></div>
+            <hr>
+
+            <h5>Add Question</h5>
+
+            <div class="mb-3">
+              <label class="form-label">Question Text</label>
+              <input id="questionText" type="text" class="form-control" placeholder="Example: What is const?">
             </div>
+
+            <div class="mb-3">
+              <label class="form-label">Answer 1</label>
+              <input id="answer1" type="text" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Answer 2</label>
+              <input id="answer2" type="text" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Answer 3</label>
+              <input id="answer3" type="text" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Answer 4</label>
+              <input id="answer4" type="text" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Correct Answer Number</label>
+              <input id="correctAnswer" type="number" class="form-control" min="1" max="4" placeholder="1-4">
+            </div>
+
+            <button id="addQuestionBtn" class="btn btn-success w-100 mb-2">
+              Add Question
+            </button>
+
+            <button id="saveExamBtn" class="btn btn-primary w-100">
+              Save Exam
+            </button>
+
+            <div id="builderMessage" class="mt-3"></div>
+
           </div>
-
-          <div class="card">
-            <div class="card-header bg-warning">
-              Run Exam
-            </div>
-
-            <div class="card-body">
-              <div id="examRunner">
-                <p class="text-muted">Choose an exam to run.</p>
-              </div>
-            </div>
-          </div>
-
         </div>
 
       </div>
 
-    </div> <!-- End of teacher view -->
+      <!-- RIGHT SIDE: SAVED EXAMS -->
+      <div class="col-md-7">
+
+        <div class="card mb-4">
+          <div class="card-header bg-dark text-white">
+            Saved Exams
+          </div>
+
+          <div class="card-body">
+            <div id="examList"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header bg-warning">
+            Run Exam
+          </div>
+
+          <div class="card-body">
+            <div id="examRunner">
+              <p class="text-muted">Choose an exam to run.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div> <!-- End of teacher view -->
 
 
-    <!-- Student page -->
-<div id="student-view" class="d-none">
+  <!-- Student page -->
+  <div id="student-view" class="d-none">
     <h2>אזור סטודנט</h2>
 
+    <h3>מבחנים זמינים</h3>
+    <div id="available-exams-list" class="mt-3">
+    </div>
     <!-- Active exam timer and details area (shown only during an exam) -->
     <div id="active-exam-panel" class="card mb-4 border-danger d-none">
-        <div class="card-header bg-danger text-white d-flex justify-content-between">
-            <span>מבחן פעיל: <span id="active-exam-id"></span></span>
-            <span id="timer" class="fw-bold">זמן שנותר: --:--</span>
-        </div>
+      <div class="card-header bg-danger text-white d-flex justify-content-between">
+        <span>מבחן פעיל: <span id="active-exam-id"></span></span>
+        <span id="timer" class="fw-bold">זמן שנותר: --:--</span>
+      </div>
     </div>
 
     <!-- Grades history area -->
     <div class="card mb-4">
-        <div class="card-header bg-info text-white">היסטוריית הציונים שלי</div>
-        <div class="card-body" id="historyArea"></div>
+      <div class="card-header bg-info text-white">היסטוריית הציונים שלי</div>
+      <div class="card-body" id="historyArea"></div>
     </div>
 
     <!-- Exam search area -->
     <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">חיפוש מבחן</h5>
-            <div class="d-flex gap-2">
-                <input type="text" id="searchCodeInput" class="form-control" placeholder="הזן קוד מבחן (לדוגמה: 1234)">
-                <button id="searchExamBtn" class="btn btn-primary">חפש והתחל</button>
-            </div>
-            <div id="studentMessage" class="mt-3"></div>
+      <div class="card-body">
+        <h5 class="card-title">חיפוש מבחן</h5>
+        <div class="d-flex gap-2">
+          <input type="text" id="searchCodeInput" class="form-control" placeholder="הזן קוד מבחן (לדוגמה: 1234)">
+          <button id="searchExamBtn" class="btn btn-primary">חפש והתחל</button>
         </div>
+        <div id="studentMessage" class="mt-3"></div>
+      </div>
     </div>
-    
+
     <div id="examExecutionArea"></div>
-</div>
+  </div>
 
   </div>
 
@@ -230,4 +215,5 @@
   <script type="module" src="js/app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
+
 </html>

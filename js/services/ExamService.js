@@ -8,6 +8,44 @@ export class ExamService {
   // Initializes the storage key
   constructor() {
     this.storageKey = "exams";
+    this.initDefaultExams(); // قمنا بإضافة هذا السطر لتشغيل دالة الامتحانات الثابتة
+  }
+
+  // هذه الدالة تفحص إذا كانت الذاكرة فارغة، وتضيف امتحاناً ثابتاً
+  initDefaultExams() {
+    const data = localStorage.getItem(this.storageKey);
+    const exams = data ? JSON.parse(data) : [];
+
+    // إذا لم يكن هناك أي امتحانات في الذاكرة، سنقوم بإضافة الامتحان الافتراضي
+    if (exams.length === 0) {
+      const defaultExam = {
+        id: "default-exam-001",
+        searchCode: "1111", // كود البحث الثابت للامتحان
+        title: "JavaScript Basics",
+        description: "מבחן בסיסי בג'אווה סקריפט (מבחן קבוע שמור במערכת)",
+        category: "Computer Science",
+        durationMinutes: 15,
+        createdAt: new Date().toISOString(),
+        questions: [
+          {
+            id: "default-q-1",
+            text: "מה תפקידו של LocalStorage?",
+            answers: ["שמירת נתונים בשרת", "שמירת נתונים בדפדפן הלקוח", "עיצוב דפי אינטרנט", "כתיבת שאילתות למסד נתונים"],
+            correctAnswerIndex: 1
+          },
+          {
+            id: "default-q-2",
+            text: "איזו מילת מפתח משמשת להגדרת משתנה ב-JavaScript?",
+            answers: ["let", "int", "string", "define"],
+            correctAnswerIndex: 0
+          }
+        ]
+      };
+
+      // حفظ الامتحان الافتراضي في الذاكرة
+      exams.push(defaultExam);
+      localStorage.setItem(this.storageKey, JSON.stringify(exams));
+    }
   }
 
   // Retrieves all exams from LocalStorage

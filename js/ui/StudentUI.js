@@ -34,9 +34,9 @@ export class StudentUI {
 
       <div class="card mb-4">
         <div class="card-body">
-          <h5 class="card-title">חיפוש וסינון מבחנים</h5>
+          <h5 class="card-title">מבחנים זמינים (חיפוש וסינון)</h5>
           <input type="text" id="searchCodeInput" class="form-control" placeholder="חפש לפי שם או קוד מבחן...">
-          <div id="searchResultsArea" class="mt-3"></div>
+          <div id="searchResultsArea" class="mt-4"></div>
         </div>
       </div>
       
@@ -44,13 +44,16 @@ export class StudentUI {
       <div id="examExecutionArea"></div>
     `;
 
-    // Listen for search input changes
+    // Listen for search input changes to filter the list live
     document.getElementById("searchCodeInput").addEventListener("input", (e) =>
       this.filterExams(e.target.value)
     );
 
     // Display the student's history
     this.renderHistory();
+
+    // Immediately display all available exams on load
+    this.filterExams("");
   }
 
   // Filters exams by title or search code
@@ -65,32 +68,43 @@ export class StudentUI {
     this.renderExamList(filtered);
   }
 
-  // Displays the filtered exam list
+  // Displays the filtered exam list as formatted cards
   renderExamList(exams) {
     const listArea = document.getElementById("searchResultsArea");
 
     // Show a message if no exams were found
     if (exams.length === 0) {
-      listArea.innerHTML = "<p>לא נמצאו מבחנים.</p>";
+      listArea.innerHTML = "<p class='text-muted'>לא נמצאו מבחנים זמינים כרגע.</p>";
       return;
     }
 
-    let html = `<ul class="list-group">`;
+    let html = ``;
 
-    // Create a list item for each exam
+    // Create a beautifully formatted card for each exam
     exams.forEach(exam => {
-      html += `<li class="list-group-item d-flex justify-content-between align-items-center">
-                ${exam.title} (קוד: ${exam.searchCode})
-                <button class="btn btn-sm btn-primary start-btn" data-code="${exam.searchCode}">התחל</button>
-               </li>`;
+      html += `
+        <div class="card mb-3 p-3 shadow-sm border-left-primary">
+          <h4>${exam.title} <span class="badge bg-secondary fs-6">קוד: ${exam.searchCode}</span></h4>
+          <p class="mb-2 text-muted">${exam.description}</p>
+          <p class="mb-3">
+             <strong>זמן:</strong> ${exam.durationMinutes} דקות | 
+             <strong>קטגוריה:</strong> ${exam.category}
+          </p>
+          <div>
+            <button class="btn btn-primary start-btn" data-code="${exam.searchCode}">התחל מבחן</button>
+          </div>
+        </div>
+      `;
     });
 
-    html += `</ul>`;
     listArea.innerHTML = html;
 
     // Attach click events to all start buttons
     document.querySelectorAll(".start-btn").forEach(btn => {
       btn.addEventListener("click", (e) => {
+        // Hide the exam list and search box when an exam starts
+        document.getElementById("searchCodeInput").parentElement.parentElement.classList.add("d-none");
+        
         const exam = this.examService.getExamByCode(e.target.dataset.code);
         this.renderExamRunner(exam);
       });
@@ -117,7 +131,7 @@ export class StudentUI {
       // Submit the exam automatically when time expires
       if (timeLeft <= 0) {
         clearInterval(this.timerInterval);
-        alert("נגמר הזמן!");
+        alert("נגמר הזמן! המבחן יוגש אוטומטית.");
         this.checkExam(exam);
       }
 
@@ -134,28 +148,30 @@ export class StudentUI {
 
     // Create the active exam panel with the timer
     let html = `
-      <div id="active-exam-panel" class="card mb-4 border-danger">
-        <div class="card-header bg-danger text-white d-flex justify-content-between">
-            <span>מבחן פעיל: ${exam.title}</span>
-            <span id="timer" class="fw-bold">זמן שנותר: ${exam.durationMinutes}:00</span>
+      <div id="active-exam-panel" class="card mb-4 border-danger shadow">
+        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+            <span class="fs-5">מבחן פעיל: ${exam.title}</span>
+            <span id="timer" class="fw-bold fs-5">זמן שנותר: ${exam.durationMinutes}:00</span>
         </div>
       </div>
-      <div class="card"><div class="card-body">
+      <div class="card shadow-sm"><div class="card-body">
     `;
 
     // Display all questions and answers
     questions.forEach((q, qIndex) => {
-      html += `<div class="border p-3 rounded mb-3"><h5>${qIndex + 1}: ${q.text}</h5>`;
+      html += `<div class="border p-4 rounded mb-4 bg-light"><h5 class="mb-3">${qIndex + 1}. ${q.text}</h5>`;
 
       q.answers.forEach((ans, aIndex) => {
-        html += `<label class="d-block"><input type="radio" name="q_${qIndex}" value="${aIndex}"> ${ans}</label>`;
+        html += `<label class="d-block mb-2 p-2 border rounded bg-white" style="cursor:pointer;">
+                   <input type="radio" name="q_${qIndex}" value="${aIndex}" class="me-2"> ${ans}
+                 </label>`;
       });
 
       html += `</div>`;
     });
 
     // Add the submit button
-    html += `<button id="submitExamBtn" class="btn btn-success">הגש מבחן</button></div></div>`;
+    html += `<button id="submitExamBtn" class="btn btn-success btn-lg w-100 mt-3">הגש מבחן</button></div></div>`;
 
     executionArea.innerHTML = html;
 
@@ -164,15 +180,17 @@ export class StudentUI {
 
     // Submit the exam when the button is clicked
     document.getElementById("submitExamBtn").addEventListener("click", () => {
-      if (this.timerInterval) clearInterval(this.timerInterval);
-      this.checkExam(exam);
+      if (confirm("האם אתה בטוח שברצונך להגיש את המבחן?")) {
+        if (this.timerInterval) clearInterval(this.timerInterval);
+        this.checkExam(exam);
+      }
     });
   }
 
   // Checks the submitted answers and calculates the score
   checkExam(exam) {
     let score = 0;
-    let resultsHTML = "<h4>תוצאות המבחן:</h4><ul>";
+    let resultsHTML = "<h4 class='mb-4'>תוצאות המבחן:</h4><ul class='list-group mb-4'>";
 
     // Check every question
     this.currentExamQuestions.forEach((q, qIndex) => {
@@ -183,11 +201,15 @@ export class StudentUI {
 
       if (isCorrect) score++;
 
-      resultsHTML += `<li><strong>שאלה:</strong> ${q.text} <br>
-        <strong>התשובה שלך:</strong> ${selectedIndex !== -1 ? q.answers[selectedIndex] : "לא ענית"} <br>
-        ${!isCorrect ? `<strong>התשובה הנכונה הייתה:</strong> ${q.answers[q.correctAnswerIndex]}` : "נכון!"}
-        </li><hr>`;
+      resultsHTML += `
+        <li class="list-group-item ${isCorrect ? 'list-group-item-success' : 'list-group-item-danger'}">
+          <strong>שאלה:</strong> ${q.text} <br>
+          <strong>התשובה שלך:</strong> ${selectedIndex !== -1 ? q.answers[selectedIndex] : "לא ענית"} <br>
+          ${!isCorrect ? `<strong>התשובה הנכונה:</strong> ${q.answers[q.correctAnswerIndex]}` : "תשובה נכונה!"}
+        </li>`;
     });
+
+    resultsHTML += "</ul>";
 
     // Calculate the final percentage
     const percent = Math.round((score / this.currentExamQuestions.length) * 100);
@@ -200,12 +222,28 @@ export class StudentUI {
       this.currentExamQuestions.length
     );
 
-    // Replace the exam with the final results
-    document.getElementById("examExecutionArea").innerHTML =
-      `<h3>ציון סופי: ${percent}%</h3>${resultsHTML}`;
+    // Replace the exam with the final results and a button to return to exams
+    document.getElementById("examExecutionArea").innerHTML = `
+      <div class="card shadow-sm border-primary">
+        <div class="card-header bg-primary text-white text-center">
+          <h3>ציון סופי: ${percent}%</h3>
+        </div>
+        <div class="card-body">
+          ${resultsHTML}
+          <button id="backToExamsBtn" class="btn btn-primary mt-3">חזור לרשימת המבחנים</button>
+        </div>
+      </div>
+    `;
 
     // Refresh the history section
     this.renderHistory();
+
+    // Reload the available exams list when clicking "Back"
+    document.getElementById("backToExamsBtn").addEventListener("click", () => {
+      document.getElementById("examExecutionArea").innerHTML = "";
+      document.getElementById("searchCodeInput").parentElement.parentElement.classList.remove("d-none");
+      this.filterExams("");
+    });
   }
 
   // Randomizes questions and answer order
@@ -258,10 +296,10 @@ export class StudentUI {
 
     // Display the average and exam history
     historyArea.innerHTML = `
-        <div class="alert alert-primary">הממוצע הכללי שלך: <strong>${average}%</strong></div>
+        <div class="alert alert-primary text-center fs-5">הממוצע הכללי שלך: <strong>${average}%</strong></div>
         ${myResults.length === 0
-          ? "<p class='text-muted'>טרם ביצעת מבחנים.</p>"
-          : `<ul class="list-group">${myResults.map(r => `<li class="list-group-item">מבחן: ${r.examTitle} | ציון: ${r.percent}%</li>`).join("")}</ul>`}
+          ? "<p class='text-muted text-center'>טרם ביצעת מבחנים.</p>"
+          : `<ul class="list-group">${myResults.map(r => `<li class="list-group-item d-flex justify-content-between"><span>${r.examTitle}</span> <strong>${r.percent}%</strong></li>`).join("")}</ul>`}
     `;
   }
 }
