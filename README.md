@@ -50,11 +50,10 @@
 [
   {
     "id": "b6f1690f-4ea1-445b-821d-91d704c7952b",
-    "searchCode": "4904",
-    "title": "מבחן ב-math",
-    "description": "מבחן מסכם",
-    "category": "מדעי המחשב",
-    "durationMinutes": 30,
+    "searchCode": "9892",
+    "תיאור": "מבחן ב-math",
+    "קטגוריה": "מבחן מסכם",
+    "משך זמן(דקות)": 10,
     "questions": [
       {
         "text": "36*5?",
